@@ -53,23 +53,37 @@ Fill the form
     Keyboard Input    type    ${row}[Legs]
 
 Preview the robot
+    # klik op preview knop
     Click    //*[@id="preview"]
 
 Submit the order
+    # klik op order knop, maar dat kan fout gaan dus meerdere pogingen
     Wait Until Keyword Succeeds    10x    3 s    Click    //*[@id="order"]
-    
-Store the receipt as a PDF file
-    [Arguments]    ${Ordernumber}
-    ${TargetDirectory}=   Catenate        SEPARATOR=    ${OUTPUT_DIR}${/}    receipts
-    Log    ${TargetDirectory}${/}${Ordernumber}.pdf
+
+Maak directory als die nog niet bestaat
+    [Arguments]    ${DirectoryNaam}
+    ${TargetDirectory}=   Catenate        SEPARATOR=    ${OUTPUT_DIR}${/}    ${DirectoryNaam}
+    # maak directory als die nog niet bestaat
     ${DirectoryExists}=    Does Directory Exist    ${TargetDirectory}   
     IF    ${DirectoryExists} == ${False}
         Create Directory    ${TargetDirectory}
     END
+    [Return]    ${TargetDirectory}
+
     
+Store the receipt as a PDF file
+    [Arguments]    ${Ordernumber}
+    # maak target naam
+    ${TargetDirectory}=     Maak directory als die nog niet bestaat    receipts
     ${order_results_html}=    Get Property    //*[@id="receipt"]    outerHTML
     Html To Pdf    ${order_results_html}    ${TargetDirectory}${/}${Ordernumber}.pdf
     [Return]     ${TargetDirectory}${/}${Ordernumber}.pdf
+
+Take a screenshot of the robot
+    [Arguments]    ${Ordernumber}
+     ${TargetDirectory}=     Maak directory als die nog niet bestaat    screenshots
+    Take Screenshot     ${TargetDirectory}${/}${Ordernumber}     //*[@id="robot-preview-image"]
+    [Return]     ${TargetDirectory}${/}${Ordernumber}
 
 *** Tasks ***
 Order robots from RobotSpareBin Industries Inc
@@ -80,9 +94,8 @@ Order robots from RobotSpareBin Industries Inc
         Fill the form    ${row}
         Preview the robot
         Submit the order
-        #Store the receipt as a PDF file     ${row}[Order number]
         ${pdf}=    Store the receipt as a PDF file    ${row}[Order number]
-    #     ${screenshot}=    Take a screenshot of the robot    ${row}[Order number]
+        ${screenshot}=    Take a screenshot of the robot    ${row}[Order number]
     #     Embed the robot screenshot to the receipt PDF file    ${screenshot}    ${pdf}
         Go to order another robot
     END

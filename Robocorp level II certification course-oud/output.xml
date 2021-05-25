@@ -1,0 +1,1486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 4.0 (Python 3.7.5 on win32)" generated="20210525 16:55:17.101" rpa="true" schemaversion="2">
+<suite id="s1" name="Tasks" source="c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\tasks.robot">
+<test id="s1-t1" name="Order robots from RobotSpareBin Industries Inc">
+<kw name="Open the robot order website">
+<kw name="New Browser" library="RPA.Browser.Playwright">
+<arg>chromium</arg>
+<arg>headless=false</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Create a new playwright Browser with specified options.
+See `Browser, Context and Page` for more information about Browser and related concepts.</doc>
+<msg timestamp="20210525 16:55:18.182" level="INFO">{"browser": "chromium", "headless": false, "handleSIGINT": true, "handleSIGTERM": true, "handleSIGHUP": true, "timeout": 30000.0, "devtools": false, "slowMo": 0.0}</msg>
+<msg timestamp="20210525 16:55:18.683" level="INFO">Successfully created browser with options: {"browser":"chromium","headless":false,"handleSIGINT":true,"handleSIGTERM":true,"handleSIGHUP":true,"timeout":30000,"devtools":false,"slowMo":0}</msg>
+<status status="PASS" starttime="20210525 16:55:18.182" endtime="20210525 16:55:18.683"/>
+</kw>
+<kw name="New Context" library="RPA.Browser.Playwright">
+<arg>viewport={'width': 1920, 'height': 1080}</arg>
+<arg>acceptDownloads=true</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Create a new BrowserContext with specified options.
+See `Browser, Context and Page` for more information about BrowserContext.</doc>
+<msg timestamp="20210525 16:55:18.683" level="INFO">{"acceptDownloads": true, "ignoreHTTPSErrors": false, "bypassCSP": false, "viewport": {"width": 1920, "height": 1080}, "deviceScaleFactor": 1.0, "isMobile": false, "hasTouch": false, "javaScriptEnabled": true, "offline": false, "hideRfBrowser": false}</msg>
+<msg timestamp="20210525 16:55:18.707" level="INFO">Successfully created context with options: {"acceptDownloads":true,"ignoreHTTPSErrors":false,"bypassCSP":false,"viewport":{"width":1920,"height":1080},"deviceScaleFactor":1,"isMobile":false,"hasTouch":false,"javaScriptEnabled":true,"offline":false,"hideRfBrowser":false}</msg>
+<status status="PASS" starttime="20210525 16:55:18.683" endtime="20210525 16:55:18.707"/>
+</kw>
+<kw name="New Page" library="RPA.Browser.Playwright">
+<arg>https://robotsparebinindustries.com/#/robot-order</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Open a new Page. A Page is the Playwright equivalent to a tab.
+See `Browser, Context and Page` for more information about Page concept.
+Returns a stable identifier for the created page.</doc>
+<msg timestamp="20210525 16:55:20.208" level="INFO">Successfully initialized new page object and opened url: https://robotsparebinindustries.com/#/robot-order</msg>
+<status status="PASS" starttime="20210525 16:55:18.707" endtime="20210525 16:55:20.208"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:18.182" endtime="20210525 16:55:20.208"/>
+</kw>
+<kw name="Get Orders">
+<var>${orders}</var>
+<kw name="Download" library="RPA.HTTP">
+<arg>url=https://robotsparebinindustries.com/orders.csv</arg>
+<arg>overwrite=True</arg>
+<arg>target_file=orders.csv</arg>
+<doc>An alias for the ``HTTP Get`` keyword.</doc>
+<msg timestamp="20210525 16:55:20.210" level="INFO">Creating a new HTTP session</msg>
+<msg timestamp="20210525 16:55:20.210" level="INFO">Creating Session using : alias=rpasession_alias.httpsrobotsparebinindustries.com, url=https://robotsparebinindustries.com, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=True,                     debug=0 </msg>
+<msg timestamp="20210525 16:55:20.401" level="INFO">GET Request : url=https://robotsparebinindustries.com/orders.csv 
+ path_url=/orders.csv 
+ headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210525 16:55:20.401" level="INFO">GET Response : url=https://robotsparebinindustries.com/orders.csv 
+ status=200, reason=OK 
+ body=Order number,Head,Body,Legs,Address
+1,1,2,3,Address 123
+2,4,1,5,Address 456
+3,6,2,3,Address 789
+4,2,3,2,Address 1
+5,3,5,1,Address 2
+6,1,6,6,Address 3
+7,5,1,5,Address 4
+8,2,3,3,Address 5
+9,3,2,2,Address 6
+10,4,4,2,Address 7
+11,6,6,1,Address 8
+12,1,3,3,Address 9
+13,1,5,4,Address A
+14,3,1,5,Address B
+15,3,2,6,Address C
+16,6,3,6,Address D
+17,5,4,1,Address E
+18,2,5,1,Address F
+19,4,6,2,Address G
+20,1,1,5,Address H 
+ </msg>
+<status status="PASS" starttime="20210525 16:55:20.209" endtime="20210525 16:55:20.401"/>
+</kw>
+<kw name="Read Table From Csv" library="RPA.Tables">
+<var>${orders}</var>
+<arg>orders.csv</arg>
+<arg>header=True</arg>
+<doc>Read a CSV file as a table.</doc>
+<msg timestamp="20210525 16:55:20.423" level="INFO">${orders} = Table(columns=['Order number', 'Head', 'Body', 'Legs', 'Address'], rows=20)</msg>
+<status status="PASS" starttime="20210525 16:55:20.401" endtime="20210525 16:55:20.423"/>
+</kw>
+<msg timestamp="20210525 16:55:20.423" level="INFO">${orders} = Table(columns=['Order number', 'Head', 'Body', 'Legs', 'Address'], rows=20)</msg>
+<status status="PASS" starttime="20210525 16:55:20.208" endtime="20210525 16:55:20.423"/>
+</kw>
+<for flavor="IN">
+<var>${row}</var>
+<value>@{orders}</value>
+<iter>
+<var name="${row}">{'Order number': '1', 'Head': '1', 'Body': '2', 'Legs': '3', 'Address': 'Address 123'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>text="OK"</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:20.423" endtime="20210525 16:55:20.477"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:20.423" endtime="20210525 16:55:20.477"/>
+</kw>
+<kw name="Fill the form">
+<arg>${row}</arg>
+<kw name="Log" library="BuiltIn">
+<arg>${row}[Order number]</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210525 16:55:20.478" level="INFO">1</msg>
+<status status="PASS" starttime="20210525 16:55:20.478" endtime="20210525 16:55:20.478"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>css=#head</arg>
+<arg>value</arg>
+<arg>${row}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:20.478" endtime="20210525 16:55:20.490"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${BodyRadioButton}</var>
+<arg>SEPARATOR=</arg>
+<arg>id-body-</arg>
+<arg>${row}[Body]</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20210525 16:55:20.491" level="INFO">${BodyRadioButton} = id-body-2</msg>
+<status status="PASS" starttime="20210525 16:55:20.490" endtime="20210525 16:55:20.491"/>
+</kw>
+<kw name="Check Checkbox" library="RPA.Browser.Playwright">
+<arg>//*[@id="${BodyRadioButton}"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Checks the checkbox or selects radio button found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:20.491" endtime="20210525 16:55:20.544"/>
+</kw>
+<kw name="Type Text" library="RPA.Browser.Playwright">
+<arg>//*[@id="address"]</arg>
+<arg>${row}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``text`` into the text field found by ``selector``.</doc>
+<msg timestamp="20210525 16:55:20.544" level="INFO">Types the text 'Address 123' in the given field.</msg>
+<status status="PASS" starttime="20210525 16:55:20.544" endtime="20210525 16:55:20.581"/>
+</kw>
+<kw name="Keyboard Key" library="RPA.Browser.Playwright">
+<arg>down</arg>
+<arg>Shift</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Press a keyboard key on the virtual keyboard or set a key up or down.</doc>
+<status status="PASS" starttime="20210525 16:55:20.582" endtime="20210525 16:55:20.588"/>
+</kw>
+<kw name="Keyboard Key" library="RPA.Browser.Playwright">
+<arg>down</arg>
+<arg>Tab</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Press a keyboard key on the virtual keyboard or set a key up or down.</doc>
+<status status="PASS" starttime="20210525 16:55:20.588" endtime="20210525 16:55:20.596"/>
+</kw>
+<kw name="Keyboard Key" library="RPA.Browser.Playwright">
+<arg>up</arg>
+<arg>Shift</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Press a keyboard key on the virtual keyboard or set a key up or down.</doc>
+<status status="PASS" starttime="20210525 16:55:20.596" endtime="20210525 16:55:20.602"/>
+</kw>
+<kw name="Keyboard Input" library="RPA.Browser.Playwright">
+<arg>type</arg>
+<arg>${row}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Input text into page with virtual keyboard.</doc>
+<status status="PASS" starttime="20210525 16:55:20.602" endtime="20210525 16:55:20.609"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:20.477" endtime="20210525 16:55:20.609"/>
+</kw>
+<kw name="Preview the robot">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>//*[@id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:20.609" endtime="20210525 16:55:20.666"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:20.609" endtime="20210525 16:55:20.666"/>
+</kw>
+<kw name="Submit the order">
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>10x</arg>
+<arg>3 s</arg>
+<arg>Click</arg>
+<arg>//*[@id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>//*[@id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:20.667" endtime="20210525 16:55:20.716"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:20.667" endtime="20210525 16:55:20.716"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:20.666" endtime="20210525 16:55:20.716"/>
+</kw>
+<kw name="Store the receipt as a PDF file">
+<var>${pdf}</var>
+<arg>${row}[Order number]</arg>
+<kw name="Maak directory als die nog niet bestaat">
+<var>${TargetDirectory}</var>
+<arg>receipts</arg>
+<kw name="Catenate" library="BuiltIn">
+<var>${TargetDirectory}</var>
+<arg>SEPARATOR=</arg>
+<arg>${OUTPUT_DIR}${/}</arg>
+<arg>${DirectoryNaam}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20210525 16:55:20.718" level="INFO">${TargetDirectory} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\receipts</msg>
+<status status="PASS" starttime="20210525 16:55:20.717" endtime="20210525 16:55:20.718"/>
+</kw>
+<kw name="Does Directory Exist" library="RPA.FileSystem">
+<var>${DirectoryExists}</var>
+<arg>${TargetDirectory}</arg>
+<doc>Returns True if the given directory exists, False if not.</doc>
+<msg timestamp="20210525 16:55:20.719" level="INFO">${DirectoryExists} = True</msg>
+<status status="PASS" starttime="20210525 16:55:20.718" endtime="20210525 16:55:20.719"/>
+</kw>
+<if>
+<branch type="IF" condition="${DirectoryExists} == ${False}">
+<kw name="Create Directory" library="RPA.FileSystem">
+<arg>${TargetDirectory}</arg>
+<doc>Creates a directory and (optionally) non-existing parent directories.</doc>
+<status status="NOT RUN" starttime="20210525 16:55:20.719" endtime="20210525 16:55:20.719"/>
+</kw>
+<status status="NOT RUN" starttime="20210525 16:55:20.719" endtime="20210525 16:55:20.719"/>
+</branch>
+<status status="PASS" starttime="20210525 16:55:20.719" endtime="20210525 16:55:20.719"/>
+</if>
+<msg timestamp="20210525 16:55:20.720" level="INFO">${TargetDirectory} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\receipts</msg>
+<status status="PASS" starttime="20210525 16:55:20.717" endtime="20210525 16:55:20.720"/>
+</kw>
+<kw name="Get Property" library="RPA.Browser.Playwright">
+<var>${order_results_html}</var>
+<arg>//*[@id="receipt"]</arg>
+<arg>outerHTML</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the ``property`` of the element found by ``selector``.</doc>
+<msg timestamp="20210525 16:55:20.744" level="INFO">${order_results_html} = &lt;div id="receipt" class="alert alert-success" role="alert"&gt;&lt;h3&gt;Receipt&lt;/h3&gt;&lt;div&gt;2021-05-25T14:55:20.707Z&lt;/div&gt;&lt;p class="badge badge-success"&gt;RSB-ROBO-ORDER-AAVIZ0JJ54&lt;/p&gt;&lt;p&gt;Address 123&lt;/p&gt;&lt;div id="par...</msg>
+<status status="PASS" starttime="20210525 16:55:20.720" endtime="20210525 16:55:20.744"/>
+</kw>
+<kw name="Html To Pdf" library="RPA.PDF">
+<arg>${order_results_html}</arg>
+<arg>${TargetDirectory}${/}${Ordernumber}.pdf</arg>
+<doc>Generate a PDF file from HTML content.</doc>
+<msg timestamp="20210525 16:55:20.744" level="INFO">Writing output to file c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\receipts\1.pdf</msg>
+<status status="PASS" starttime="20210525 16:55:20.744" endtime="20210525 16:55:20.747"/>
+</kw>
+<msg timestamp="20210525 16:55:20.748" level="INFO">${pdf} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\receipts\1.pdf</msg>
+<status status="PASS" starttime="20210525 16:55:20.716" endtime="20210525 16:55:20.748"/>
+</kw>
+<kw name="Take a screenshot of the robot">
+<var>${screenshot}</var>
+<arg>${row}[Order number]</arg>
+<kw name="Maak directory als die nog niet bestaat">
+<var>${TargetDirectory}</var>
+<arg>screenshots</arg>
+<kw name="Catenate" library="BuiltIn">
+<var>${TargetDirectory}</var>
+<arg>SEPARATOR=</arg>
+<arg>${OUTPUT_DIR}${/}</arg>
+<arg>${DirectoryNaam}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20210525 16:55:20.750" level="INFO">${TargetDirectory} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\screenshots</msg>
+<status status="PASS" starttime="20210525 16:55:20.749" endtime="20210525 16:55:20.750"/>
+</kw>
+<kw name="Does Directory Exist" library="RPA.FileSystem">
+<var>${DirectoryExists}</var>
+<arg>${TargetDirectory}</arg>
+<doc>Returns True if the given directory exists, False if not.</doc>
+<msg timestamp="20210525 16:55:20.751" level="INFO">${DirectoryExists} = False</msg>
+<status status="PASS" starttime="20210525 16:55:20.750" endtime="20210525 16:55:20.751"/>
+</kw>
+<if>
+<branch type="IF" condition="${DirectoryExists} == ${False}">
+<kw name="Create Directory" library="RPA.FileSystem">
+<arg>${TargetDirectory}</arg>
+<doc>Creates a directory and (optionally) non-existing parent directories.</doc>
+<status status="PASS" starttime="20210525 16:55:20.751" endtime="20210525 16:55:20.752"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:20.751" endtime="20210525 16:55:20.752"/>
+</branch>
+<status status="PASS" starttime="20210525 16:55:20.751" endtime="20210525 16:55:20.752"/>
+</if>
+<msg timestamp="20210525 16:55:20.752" level="INFO">${TargetDirectory} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\screenshots</msg>
+<status status="PASS" starttime="20210525 16:55:20.749" endtime="20210525 16:55:20.752"/>
+</kw>
+<kw name="Take Screenshot" library="RPA.Browser.Playwright">
+<arg>${TargetDirectory}${/}${Ordernumber}.jpg</arg>
+<arg>//*[@id="robot-preview-image"]</arg>
+<tag>PageContent</tag>
+<doc>Takes a screenshot of the current window and saves it to ``path``. Saves it as a png.</doc>
+<msg timestamp="20210525 16:55:21.105" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="screenshots/1.jpg.png"&gt;&lt;img src="screenshots/1.jpg.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20210525 16:55:20.752" endtime="20210525 16:55:21.105"/>
+</kw>
+<msg timestamp="20210525 16:55:21.105" level="INFO">${screenshot} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\screenshots\1.jpg</msg>
+<status status="PASS" starttime="20210525 16:55:20.748" endtime="20210525 16:55:21.105"/>
+</kw>
+<kw name="Go to order another robot">
+<kw name="Go To" library="RPA.Browser.Playwright">
+<arg>https://robotsparebinindustries.com/#/robot-order</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Navigates to the given ``url``.</doc>
+<msg timestamp="20210525 16:55:21.180" level="INFO">Succesfully opened URL https://robotsparebinindustries.com/#/robot-order</msg>
+<status status="PASS" starttime="20210525 16:55:21.106" endtime="20210525 16:55:21.180"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:21.105" endtime="20210525 16:55:21.181"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:20.423" endtime="20210525 16:55:21.181"/>
+</iter>
+<iter>
+<var name="${row}">{'Order number': '2', 'Head': '4', 'Body': '1', 'Legs': '5', 'Address': 'Address 456'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>text="OK"</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:21.182" endtime="20210525 16:55:21.227"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:21.181" endtime="20210525 16:55:21.227"/>
+</kw>
+<kw name="Fill the form">
+<arg>${row}</arg>
+<kw name="Log" library="BuiltIn">
+<arg>${row}[Order number]</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210525 16:55:21.227" level="INFO">2</msg>
+<status status="PASS" starttime="20210525 16:55:21.227" endtime="20210525 16:55:21.228"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>css=#head</arg>
+<arg>value</arg>
+<arg>${row}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:21.228" endtime="20210525 16:55:21.240"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${BodyRadioButton}</var>
+<arg>SEPARATOR=</arg>
+<arg>id-body-</arg>
+<arg>${row}[Body]</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20210525 16:55:21.240" level="INFO">${BodyRadioButton} = id-body-1</msg>
+<status status="PASS" starttime="20210525 16:55:21.240" endtime="20210525 16:55:21.240"/>
+</kw>
+<kw name="Check Checkbox" library="RPA.Browser.Playwright">
+<arg>//*[@id="${BodyRadioButton}"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Checks the checkbox or selects radio button found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:21.240" endtime="20210525 16:55:21.292"/>
+</kw>
+<kw name="Type Text" library="RPA.Browser.Playwright">
+<arg>//*[@id="address"]</arg>
+<arg>${row}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``text`` into the text field found by ``selector``.</doc>
+<msg timestamp="20210525 16:55:21.292" level="INFO">Types the text 'Address 456' in the given field.</msg>
+<status status="PASS" starttime="20210525 16:55:21.292" endtime="20210525 16:55:21.329"/>
+</kw>
+<kw name="Keyboard Key" library="RPA.Browser.Playwright">
+<arg>down</arg>
+<arg>Shift</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Press a keyboard key on the virtual keyboard or set a key up or down.</doc>
+<status status="PASS" starttime="20210525 16:55:21.329" endtime="20210525 16:55:21.335"/>
+</kw>
+<kw name="Keyboard Key" library="RPA.Browser.Playwright">
+<arg>down</arg>
+<arg>Tab</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Press a keyboard key on the virtual keyboard or set a key up or down.</doc>
+<status status="PASS" starttime="20210525 16:55:21.335" endtime="20210525 16:55:21.341"/>
+</kw>
+<kw name="Keyboard Key" library="RPA.Browser.Playwright">
+<arg>up</arg>
+<arg>Shift</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Press a keyboard key on the virtual keyboard or set a key up or down.</doc>
+<status status="PASS" starttime="20210525 16:55:21.341" endtime="20210525 16:55:21.345"/>
+</kw>
+<kw name="Keyboard Input" library="RPA.Browser.Playwright">
+<arg>type</arg>
+<arg>${row}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Input text into page with virtual keyboard.</doc>
+<status status="PASS" starttime="20210525 16:55:21.346" endtime="20210525 16:55:21.353"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:21.227" endtime="20210525 16:55:21.353"/>
+</kw>
+<kw name="Preview the robot">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>//*[@id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:21.353" endtime="20210525 16:55:21.411"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:21.353" endtime="20210525 16:55:21.411"/>
+</kw>
+<kw name="Submit the order">
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>10x</arg>
+<arg>3 s</arg>
+<arg>Click</arg>
+<arg>//*[@id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>//*[@id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:21.412" endtime="20210525 16:55:21.465"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:21.412" endtime="20210525 16:55:21.465"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:21.411" endtime="20210525 16:55:21.465"/>
+</kw>
+<kw name="Store the receipt as a PDF file">
+<var>${pdf}</var>
+<arg>${row}[Order number]</arg>
+<kw name="Maak directory als die nog niet bestaat">
+<var>${TargetDirectory}</var>
+<arg>receipts</arg>
+<kw name="Catenate" library="BuiltIn">
+<var>${TargetDirectory}</var>
+<arg>SEPARATOR=</arg>
+<arg>${OUTPUT_DIR}${/}</arg>
+<arg>${DirectoryNaam}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20210525 16:55:21.467" level="INFO">${TargetDirectory} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\receipts</msg>
+<status status="PASS" starttime="20210525 16:55:21.466" endtime="20210525 16:55:21.467"/>
+</kw>
+<kw name="Does Directory Exist" library="RPA.FileSystem">
+<var>${DirectoryExists}</var>
+<arg>${TargetDirectory}</arg>
+<doc>Returns True if the given directory exists, False if not.</doc>
+<msg timestamp="20210525 16:55:21.469" level="INFO">${DirectoryExists} = True</msg>
+<status status="PASS" starttime="20210525 16:55:21.467" endtime="20210525 16:55:21.469"/>
+</kw>
+<if>
+<branch type="IF" condition="${DirectoryExists} == ${False}">
+<kw name="Create Directory" library="RPA.FileSystem">
+<arg>${TargetDirectory}</arg>
+<doc>Creates a directory and (optionally) non-existing parent directories.</doc>
+<status status="NOT RUN" starttime="20210525 16:55:21.469" endtime="20210525 16:55:21.470"/>
+</kw>
+<status status="NOT RUN" starttime="20210525 16:55:21.469" endtime="20210525 16:55:21.470"/>
+</branch>
+<status status="PASS" starttime="20210525 16:55:21.469" endtime="20210525 16:55:21.470"/>
+</if>
+<msg timestamp="20210525 16:55:21.470" level="INFO">${TargetDirectory} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\receipts</msg>
+<status status="PASS" starttime="20210525 16:55:21.466" endtime="20210525 16:55:21.470"/>
+</kw>
+<kw name="Get Property" library="RPA.Browser.Playwright">
+<var>${order_results_html}</var>
+<arg>//*[@id="receipt"]</arg>
+<arg>outerHTML</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the ``property`` of the element found by ``selector``.</doc>
+<msg timestamp="20210525 16:55:21.488" level="INFO">${order_results_html} = &lt;div id="receipt" class="alert alert-success" role="alert"&gt;&lt;h3&gt;Receipt&lt;/h3&gt;&lt;div&gt;2021-05-25T14:55:21.460Z&lt;/div&gt;&lt;p class="badge badge-success"&gt;RSB-ROBO-ORDER-6142MGYS88&lt;/p&gt;&lt;p&gt;Address 456&lt;/p&gt;&lt;div id="par...</msg>
+<status status="PASS" starttime="20210525 16:55:21.470" endtime="20210525 16:55:21.488"/>
+</kw>
+<kw name="Html To Pdf" library="RPA.PDF">
+<arg>${order_results_html}</arg>
+<arg>${TargetDirectory}${/}${Ordernumber}.pdf</arg>
+<doc>Generate a PDF file from HTML content.</doc>
+<msg timestamp="20210525 16:55:21.489" level="INFO">Writing output to file c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\receipts\2.pdf</msg>
+<status status="PASS" starttime="20210525 16:55:21.488" endtime="20210525 16:55:21.491"/>
+</kw>
+<msg timestamp="20210525 16:55:21.491" level="INFO">${pdf} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\receipts\2.pdf</msg>
+<status status="PASS" starttime="20210525 16:55:21.465" endtime="20210525 16:55:21.491"/>
+</kw>
+<kw name="Take a screenshot of the robot">
+<var>${screenshot}</var>
+<arg>${row}[Order number]</arg>
+<kw name="Maak directory als die nog niet bestaat">
+<var>${TargetDirectory}</var>
+<arg>screenshots</arg>
+<kw name="Catenate" library="BuiltIn">
+<var>${TargetDirectory}</var>
+<arg>SEPARATOR=</arg>
+<arg>${OUTPUT_DIR}${/}</arg>
+<arg>${DirectoryNaam}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20210525 16:55:21.493" level="INFO">${TargetDirectory} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\screenshots</msg>
+<status status="PASS" starttime="20210525 16:55:21.492" endtime="20210525 16:55:21.493"/>
+</kw>
+<kw name="Does Directory Exist" library="RPA.FileSystem">
+<var>${DirectoryExists}</var>
+<arg>${TargetDirectory}</arg>
+<doc>Returns True if the given directory exists, False if not.</doc>
+<msg timestamp="20210525 16:55:21.494" level="INFO">${DirectoryExists} = True</msg>
+<status status="PASS" starttime="20210525 16:55:21.493" endtime="20210525 16:55:21.494"/>
+</kw>
+<if>
+<branch type="IF" condition="${DirectoryExists} == ${False}">
+<kw name="Create Directory" library="RPA.FileSystem">
+<arg>${TargetDirectory}</arg>
+<doc>Creates a directory and (optionally) non-existing parent directories.</doc>
+<status status="NOT RUN" starttime="20210525 16:55:21.494" endtime="20210525 16:55:21.495"/>
+</kw>
+<status status="NOT RUN" starttime="20210525 16:55:21.494" endtime="20210525 16:55:21.495"/>
+</branch>
+<status status="PASS" starttime="20210525 16:55:21.494" endtime="20210525 16:55:21.495"/>
+</if>
+<msg timestamp="20210525 16:55:21.495" level="INFO">${TargetDirectory} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\screenshots</msg>
+<status status="PASS" starttime="20210525 16:55:21.492" endtime="20210525 16:55:21.495"/>
+</kw>
+<kw name="Take Screenshot" library="RPA.Browser.Playwright">
+<arg>${TargetDirectory}${/}${Ordernumber}.jpg</arg>
+<arg>//*[@id="robot-preview-image"]</arg>
+<tag>PageContent</tag>
+<doc>Takes a screenshot of the current window and saves it to ``path``. Saves it as a png.</doc>
+<msg timestamp="20210525 16:55:21.787" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="screenshots/2.jpg.png"&gt;&lt;img src="screenshots/2.jpg.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20210525 16:55:21.495" endtime="20210525 16:55:21.788"/>
+</kw>
+<msg timestamp="20210525 16:55:21.788" level="INFO">${screenshot} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\screenshots\2.jpg</msg>
+<status status="PASS" starttime="20210525 16:55:21.491" endtime="20210525 16:55:21.788"/>
+</kw>
+<kw name="Go to order another robot">
+<kw name="Go To" library="RPA.Browser.Playwright">
+<arg>https://robotsparebinindustries.com/#/robot-order</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Navigates to the given ``url``.</doc>
+<msg timestamp="20210525 16:55:21.847" level="INFO">Succesfully opened URL https://robotsparebinindustries.com/#/robot-order</msg>
+<status status="PASS" starttime="20210525 16:55:21.789" endtime="20210525 16:55:21.847"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:21.788" endtime="20210525 16:55:21.847"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:21.181" endtime="20210525 16:55:21.847"/>
+</iter>
+<iter>
+<var name="${row}">{'Order number': '3', 'Head': '6', 'Body': '2', 'Legs': '3', 'Address': 'Address 789'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>text="OK"</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:21.848" endtime="20210525 16:55:21.893"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:21.848" endtime="20210525 16:55:21.893"/>
+</kw>
+<kw name="Fill the form">
+<arg>${row}</arg>
+<kw name="Log" library="BuiltIn">
+<arg>${row}[Order number]</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210525 16:55:21.894" level="INFO">3</msg>
+<status status="PASS" starttime="20210525 16:55:21.894" endtime="20210525 16:55:21.894"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>css=#head</arg>
+<arg>value</arg>
+<arg>${row}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:21.894" endtime="20210525 16:55:21.907"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${BodyRadioButton}</var>
+<arg>SEPARATOR=</arg>
+<arg>id-body-</arg>
+<arg>${row}[Body]</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20210525 16:55:21.907" level="INFO">${BodyRadioButton} = id-body-2</msg>
+<status status="PASS" starttime="20210525 16:55:21.907" endtime="20210525 16:55:21.907"/>
+</kw>
+<kw name="Check Checkbox" library="RPA.Browser.Playwright">
+<arg>//*[@id="${BodyRadioButton}"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Checks the checkbox or selects radio button found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:21.908" endtime="20210525 16:55:21.974"/>
+</kw>
+<kw name="Type Text" library="RPA.Browser.Playwright">
+<arg>//*[@id="address"]</arg>
+<arg>${row}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``text`` into the text field found by ``selector``.</doc>
+<msg timestamp="20210525 16:55:21.975" level="INFO">Types the text 'Address 789' in the given field.</msg>
+<status status="PASS" starttime="20210525 16:55:21.974" endtime="20210525 16:55:22.014"/>
+</kw>
+<kw name="Keyboard Key" library="RPA.Browser.Playwright">
+<arg>down</arg>
+<arg>Shift</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Press a keyboard key on the virtual keyboard or set a key up or down.</doc>
+<status status="PASS" starttime="20210525 16:55:22.015" endtime="20210525 16:55:22.020"/>
+</kw>
+<kw name="Keyboard Key" library="RPA.Browser.Playwright">
+<arg>down</arg>
+<arg>Tab</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Press a keyboard key on the virtual keyboard or set a key up or down.</doc>
+<status status="PASS" starttime="20210525 16:55:22.020" endtime="20210525 16:55:22.026"/>
+</kw>
+<kw name="Keyboard Key" library="RPA.Browser.Playwright">
+<arg>up</arg>
+<arg>Shift</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Press a keyboard key on the virtual keyboard or set a key up or down.</doc>
+<status status="PASS" starttime="20210525 16:55:22.026" endtime="20210525 16:55:22.030"/>
+</kw>
+<kw name="Keyboard Input" library="RPA.Browser.Playwright">
+<arg>type</arg>
+<arg>${row}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Input text into page with virtual keyboard.</doc>
+<status status="PASS" starttime="20210525 16:55:22.030" endtime="20210525 16:55:22.037"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:21.893" endtime="20210525 16:55:22.037"/>
+</kw>
+<kw name="Preview the robot">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>//*[@id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:22.038" endtime="20210525 16:55:22.082"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:22.037" endtime="20210525 16:55:22.083"/>
+</kw>
+<kw name="Submit the order">
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>10x</arg>
+<arg>3 s</arg>
+<arg>Click</arg>
+<arg>//*[@id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>//*[@id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:22.084" endtime="20210525 16:55:22.129"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:22.084" endtime="20210525 16:55:22.129"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:22.083" endtime="20210525 16:55:22.129"/>
+</kw>
+<kw name="Store the receipt as a PDF file">
+<var>${pdf}</var>
+<arg>${row}[Order number]</arg>
+<kw name="Maak directory als die nog niet bestaat">
+<var>${TargetDirectory}</var>
+<arg>receipts</arg>
+<kw name="Catenate" library="BuiltIn">
+<var>${TargetDirectory}</var>
+<arg>SEPARATOR=</arg>
+<arg>${OUTPUT_DIR}${/}</arg>
+<arg>${DirectoryNaam}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20210525 16:55:22.130" level="INFO">${TargetDirectory} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\receipts</msg>
+<status status="PASS" starttime="20210525 16:55:22.130" endtime="20210525 16:55:22.130"/>
+</kw>
+<kw name="Does Directory Exist" library="RPA.FileSystem">
+<var>${DirectoryExists}</var>
+<arg>${TargetDirectory}</arg>
+<doc>Returns True if the given directory exists, False if not.</doc>
+<msg timestamp="20210525 16:55:22.131" level="INFO">${DirectoryExists} = True</msg>
+<status status="PASS" starttime="20210525 16:55:22.130" endtime="20210525 16:55:22.131"/>
+</kw>
+<if>
+<branch type="IF" condition="${DirectoryExists} == ${False}">
+<kw name="Create Directory" library="RPA.FileSystem">
+<arg>${TargetDirectory}</arg>
+<doc>Creates a directory and (optionally) non-existing parent directories.</doc>
+<status status="NOT RUN" starttime="20210525 16:55:22.132" endtime="20210525 16:55:22.132"/>
+</kw>
+<status status="NOT RUN" starttime="20210525 16:55:22.132" endtime="20210525 16:55:22.132"/>
+</branch>
+<status status="PASS" starttime="20210525 16:55:22.131" endtime="20210525 16:55:22.132"/>
+</if>
+<msg timestamp="20210525 16:55:22.132" level="INFO">${TargetDirectory} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\receipts</msg>
+<status status="PASS" starttime="20210525 16:55:22.130" endtime="20210525 16:55:22.132"/>
+</kw>
+<kw name="Get Property" library="RPA.Browser.Playwright">
+<var>${order_results_html}</var>
+<arg>//*[@id="receipt"]</arg>
+<arg>outerHTML</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the ``property`` of the element found by ``selector``.</doc>
+<msg timestamp="20210525 16:55:22.153" level="INFO">${order_results_html} = &lt;div id="receipt" class="alert alert-success" role="alert"&gt;&lt;h3&gt;Receipt&lt;/h3&gt;&lt;div&gt;2021-05-25T14:55:22.125Z&lt;/div&gt;&lt;p class="badge badge-success"&gt;RSB-ROBO-ORDER-KB96T8VY47&lt;/p&gt;&lt;p&gt;Address 789&lt;/p&gt;&lt;div id="par...</msg>
+<status status="PASS" starttime="20210525 16:55:22.132" endtime="20210525 16:55:22.153"/>
+</kw>
+<kw name="Html To Pdf" library="RPA.PDF">
+<arg>${order_results_html}</arg>
+<arg>${TargetDirectory}${/}${Ordernumber}.pdf</arg>
+<doc>Generate a PDF file from HTML content.</doc>
+<msg timestamp="20210525 16:55:22.155" level="INFO">Writing output to file c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\receipts\3.pdf</msg>
+<status status="PASS" starttime="20210525 16:55:22.153" endtime="20210525 16:55:22.156"/>
+</kw>
+<msg timestamp="20210525 16:55:22.156" level="INFO">${pdf} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\receipts\3.pdf</msg>
+<status status="PASS" starttime="20210525 16:55:22.129" endtime="20210525 16:55:22.156"/>
+</kw>
+<kw name="Take a screenshot of the robot">
+<var>${screenshot}</var>
+<arg>${row}[Order number]</arg>
+<kw name="Maak directory als die nog niet bestaat">
+<var>${TargetDirectory}</var>
+<arg>screenshots</arg>
+<kw name="Catenate" library="BuiltIn">
+<var>${TargetDirectory}</var>
+<arg>SEPARATOR=</arg>
+<arg>${OUTPUT_DIR}${/}</arg>
+<arg>${DirectoryNaam}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20210525 16:55:22.157" level="INFO">${TargetDirectory} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\screenshots</msg>
+<status status="PASS" starttime="20210525 16:55:22.157" endtime="20210525 16:55:22.157"/>
+</kw>
+<kw name="Does Directory Exist" library="RPA.FileSystem">
+<var>${DirectoryExists}</var>
+<arg>${TargetDirectory}</arg>
+<doc>Returns True if the given directory exists, False if not.</doc>
+<msg timestamp="20210525 16:55:22.159" level="INFO">${DirectoryExists} = True</msg>
+<status status="PASS" starttime="20210525 16:55:22.157" endtime="20210525 16:55:22.159"/>
+</kw>
+<if>
+<branch type="IF" condition="${DirectoryExists} == ${False}">
+<kw name="Create Directory" library="RPA.FileSystem">
+<arg>${TargetDirectory}</arg>
+<doc>Creates a directory and (optionally) non-existing parent directories.</doc>
+<status status="NOT RUN" starttime="20210525 16:55:22.159" endtime="20210525 16:55:22.159"/>
+</kw>
+<status status="NOT RUN" starttime="20210525 16:55:22.159" endtime="20210525 16:55:22.159"/>
+</branch>
+<status status="PASS" starttime="20210525 16:55:22.159" endtime="20210525 16:55:22.159"/>
+</if>
+<msg timestamp="20210525 16:55:22.159" level="INFO">${TargetDirectory} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\screenshots</msg>
+<status status="PASS" starttime="20210525 16:55:22.156" endtime="20210525 16:55:22.159"/>
+</kw>
+<kw name="Take Screenshot" library="RPA.Browser.Playwright">
+<arg>${TargetDirectory}${/}${Ordernumber}.jpg</arg>
+<arg>//*[@id="robot-preview-image"]</arg>
+<tag>PageContent</tag>
+<doc>Takes a screenshot of the current window and saves it to ``path``. Saves it as a png.</doc>
+<msg timestamp="20210525 16:55:22.454" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="screenshots/3.jpg.png"&gt;&lt;img src="screenshots/3.jpg.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20210525 16:55:22.159" endtime="20210525 16:55:22.454"/>
+</kw>
+<msg timestamp="20210525 16:55:22.455" level="INFO">${screenshot} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\screenshots\3.jpg</msg>
+<status status="PASS" starttime="20210525 16:55:22.156" endtime="20210525 16:55:22.455"/>
+</kw>
+<kw name="Go to order another robot">
+<kw name="Go To" library="RPA.Browser.Playwright">
+<arg>https://robotsparebinindustries.com/#/robot-order</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Navigates to the given ``url``.</doc>
+<msg timestamp="20210525 16:55:22.519" level="INFO">Succesfully opened URL https://robotsparebinindustries.com/#/robot-order</msg>
+<status status="PASS" starttime="20210525 16:55:22.455" endtime="20210525 16:55:22.519"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:22.455" endtime="20210525 16:55:22.520"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:21.848" endtime="20210525 16:55:22.520"/>
+</iter>
+<iter>
+<var name="${row}">{'Order number': '4', 'Head': '2', 'Body': '3', 'Legs': '2', 'Address': 'Address 1'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>text="OK"</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:22.520" endtime="20210525 16:55:22.562"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:22.520" endtime="20210525 16:55:22.562"/>
+</kw>
+<kw name="Fill the form">
+<arg>${row}</arg>
+<kw name="Log" library="BuiltIn">
+<arg>${row}[Order number]</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210525 16:55:22.563" level="INFO">4</msg>
+<status status="PASS" starttime="20210525 16:55:22.562" endtime="20210525 16:55:22.563"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>css=#head</arg>
+<arg>value</arg>
+<arg>${row}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:22.563" endtime="20210525 16:55:22.575"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${BodyRadioButton}</var>
+<arg>SEPARATOR=</arg>
+<arg>id-body-</arg>
+<arg>${row}[Body]</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20210525 16:55:22.576" level="INFO">${BodyRadioButton} = id-body-3</msg>
+<status status="PASS" starttime="20210525 16:55:22.575" endtime="20210525 16:55:22.576"/>
+</kw>
+<kw name="Check Checkbox" library="RPA.Browser.Playwright">
+<arg>//*[@id="${BodyRadioButton}"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Checks the checkbox or selects radio button found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:22.576" endtime="20210525 16:55:22.627"/>
+</kw>
+<kw name="Type Text" library="RPA.Browser.Playwright">
+<arg>//*[@id="address"]</arg>
+<arg>${row}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``text`` into the text field found by ``selector``.</doc>
+<msg timestamp="20210525 16:55:22.628" level="INFO">Types the text 'Address 1' in the given field.</msg>
+<status status="PASS" starttime="20210525 16:55:22.627" endtime="20210525 16:55:22.660"/>
+</kw>
+<kw name="Keyboard Key" library="RPA.Browser.Playwright">
+<arg>down</arg>
+<arg>Shift</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Press a keyboard key on the virtual keyboard or set a key up or down.</doc>
+<status status="PASS" starttime="20210525 16:55:22.660" endtime="20210525 16:55:22.664"/>
+</kw>
+<kw name="Keyboard Key" library="RPA.Browser.Playwright">
+<arg>down</arg>
+<arg>Tab</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Press a keyboard key on the virtual keyboard or set a key up or down.</doc>
+<status status="PASS" starttime="20210525 16:55:22.664" endtime="20210525 16:55:22.671"/>
+</kw>
+<kw name="Keyboard Key" library="RPA.Browser.Playwright">
+<arg>up</arg>
+<arg>Shift</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Press a keyboard key on the virtual keyboard or set a key up or down.</doc>
+<status status="PASS" starttime="20210525 16:55:22.671" endtime="20210525 16:55:22.675"/>
+</kw>
+<kw name="Keyboard Input" library="RPA.Browser.Playwright">
+<arg>type</arg>
+<arg>${row}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Input text into page with virtual keyboard.</doc>
+<status status="PASS" starttime="20210525 16:55:22.675" endtime="20210525 16:55:22.680"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:22.562" endtime="20210525 16:55:22.680"/>
+</kw>
+<kw name="Preview the robot">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>//*[@id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:22.681" endtime="20210525 16:55:22.737"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:22.680" endtime="20210525 16:55:22.737"/>
+</kw>
+<kw name="Submit the order">
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>10x</arg>
+<arg>3 s</arg>
+<arg>Click</arg>
+<arg>//*[@id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>//*[@id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:22.739" endtime="20210525 16:55:22.782"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:22.738" endtime="20210525 16:55:22.782"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:22.738" endtime="20210525 16:55:22.782"/>
+</kw>
+<kw name="Store the receipt as a PDF file">
+<var>${pdf}</var>
+<arg>${row}[Order number]</arg>
+<kw name="Maak directory als die nog niet bestaat">
+<var>${TargetDirectory}</var>
+<arg>receipts</arg>
+<kw name="Catenate" library="BuiltIn">
+<var>${TargetDirectory}</var>
+<arg>SEPARATOR=</arg>
+<arg>${OUTPUT_DIR}${/}</arg>
+<arg>${DirectoryNaam}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20210525 16:55:22.784" level="INFO">${TargetDirectory} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\receipts</msg>
+<status status="PASS" starttime="20210525 16:55:22.783" endtime="20210525 16:55:22.784"/>
+</kw>
+<kw name="Does Directory Exist" library="RPA.FileSystem">
+<var>${DirectoryExists}</var>
+<arg>${TargetDirectory}</arg>
+<doc>Returns True if the given directory exists, False if not.</doc>
+<msg timestamp="20210525 16:55:22.786" level="INFO">${DirectoryExists} = True</msg>
+<status status="PASS" starttime="20210525 16:55:22.784" endtime="20210525 16:55:22.786"/>
+</kw>
+<if>
+<branch type="IF" condition="${DirectoryExists} == ${False}">
+<kw name="Create Directory" library="RPA.FileSystem">
+<arg>${TargetDirectory}</arg>
+<doc>Creates a directory and (optionally) non-existing parent directories.</doc>
+<status status="NOT RUN" starttime="20210525 16:55:22.786" endtime="20210525 16:55:22.786"/>
+</kw>
+<status status="NOT RUN" starttime="20210525 16:55:22.786" endtime="20210525 16:55:22.786"/>
+</branch>
+<status status="PASS" starttime="20210525 16:55:22.786" endtime="20210525 16:55:22.786"/>
+</if>
+<msg timestamp="20210525 16:55:22.786" level="INFO">${TargetDirectory} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\receipts</msg>
+<status status="PASS" starttime="20210525 16:55:22.783" endtime="20210525 16:55:22.786"/>
+</kw>
+<kw name="Get Property" library="RPA.Browser.Playwright">
+<var>${order_results_html}</var>
+<arg>//*[@id="receipt"]</arg>
+<arg>outerHTML</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the ``property`` of the element found by ``selector``.</doc>
+<msg timestamp="20210525 16:55:22.807" level="INFO">${order_results_html} = &lt;div id="receipt" class="alert alert-success" role="alert"&gt;&lt;h3&gt;Receipt&lt;/h3&gt;&lt;div&gt;2021-05-25T14:55:22.777Z&lt;/div&gt;&lt;p class="badge badge-success"&gt;RSB-ROBO-ORDER-68QGXWFQ27&lt;/p&gt;&lt;p&gt;Address 1&lt;/p&gt;&lt;div id="parts...</msg>
+<status status="PASS" starttime="20210525 16:55:22.787" endtime="20210525 16:55:22.807"/>
+</kw>
+<kw name="Html To Pdf" library="RPA.PDF">
+<arg>${order_results_html}</arg>
+<arg>${TargetDirectory}${/}${Ordernumber}.pdf</arg>
+<doc>Generate a PDF file from HTML content.</doc>
+<msg timestamp="20210525 16:55:22.808" level="INFO">Writing output to file c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\receipts\4.pdf</msg>
+<status status="PASS" starttime="20210525 16:55:22.807" endtime="20210525 16:55:22.809"/>
+</kw>
+<msg timestamp="20210525 16:55:22.810" level="INFO">${pdf} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\receipts\4.pdf</msg>
+<status status="PASS" starttime="20210525 16:55:22.782" endtime="20210525 16:55:22.810"/>
+</kw>
+<kw name="Take a screenshot of the robot">
+<var>${screenshot}</var>
+<arg>${row}[Order number]</arg>
+<kw name="Maak directory als die nog niet bestaat">
+<var>${TargetDirectory}</var>
+<arg>screenshots</arg>
+<kw name="Catenate" library="BuiltIn">
+<var>${TargetDirectory}</var>
+<arg>SEPARATOR=</arg>
+<arg>${OUTPUT_DIR}${/}</arg>
+<arg>${DirectoryNaam}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20210525 16:55:22.811" level="INFO">${TargetDirectory} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\screenshots</msg>
+<status status="PASS" starttime="20210525 16:55:22.811" endtime="20210525 16:55:22.811"/>
+</kw>
+<kw name="Does Directory Exist" library="RPA.FileSystem">
+<var>${DirectoryExists}</var>
+<arg>${TargetDirectory}</arg>
+<doc>Returns True if the given directory exists, False if not.</doc>
+<msg timestamp="20210525 16:55:22.812" level="INFO">${DirectoryExists} = True</msg>
+<status status="PASS" starttime="20210525 16:55:22.811" endtime="20210525 16:55:22.812"/>
+</kw>
+<if>
+<branch type="IF" condition="${DirectoryExists} == ${False}">
+<kw name="Create Directory" library="RPA.FileSystem">
+<arg>${TargetDirectory}</arg>
+<doc>Creates a directory and (optionally) non-existing parent directories.</doc>
+<status status="NOT RUN" starttime="20210525 16:55:22.813" endtime="20210525 16:55:22.813"/>
+</kw>
+<status status="NOT RUN" starttime="20210525 16:55:22.812" endtime="20210525 16:55:22.813"/>
+</branch>
+<status status="PASS" starttime="20210525 16:55:22.812" endtime="20210525 16:55:22.813"/>
+</if>
+<msg timestamp="20210525 16:55:22.813" level="INFO">${TargetDirectory} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\screenshots</msg>
+<status status="PASS" starttime="20210525 16:55:22.810" endtime="20210525 16:55:22.813"/>
+</kw>
+<kw name="Take Screenshot" library="RPA.Browser.Playwright">
+<arg>${TargetDirectory}${/}${Ordernumber}.jpg</arg>
+<arg>//*[@id="robot-preview-image"]</arg>
+<tag>PageContent</tag>
+<doc>Takes a screenshot of the current window and saves it to ``path``. Saves it as a png.</doc>
+<msg timestamp="20210525 16:55:23.137" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="screenshots/4.jpg.png"&gt;&lt;img src="screenshots/4.jpg.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20210525 16:55:22.813" endtime="20210525 16:55:23.137"/>
+</kw>
+<msg timestamp="20210525 16:55:23.137" level="INFO">${screenshot} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\screenshots\4.jpg</msg>
+<status status="PASS" starttime="20210525 16:55:22.810" endtime="20210525 16:55:23.137"/>
+</kw>
+<kw name="Go to order another robot">
+<kw name="Go To" library="RPA.Browser.Playwright">
+<arg>https://robotsparebinindustries.com/#/robot-order</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Navigates to the given ``url``.</doc>
+<msg timestamp="20210525 16:55:23.199" level="INFO">Succesfully opened URL https://robotsparebinindustries.com/#/robot-order</msg>
+<status status="PASS" starttime="20210525 16:55:23.138" endtime="20210525 16:55:23.199"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:23.137" endtime="20210525 16:55:23.199"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:22.520" endtime="20210525 16:55:23.199"/>
+</iter>
+<iter>
+<var name="${row}">{'Order number': '5', 'Head': '3', 'Body': '5', 'Legs': '1', 'Address': 'Address 2'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>text="OK"</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:23.200" endtime="20210525 16:55:23.248"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:23.200" endtime="20210525 16:55:23.248"/>
+</kw>
+<kw name="Fill the form">
+<arg>${row}</arg>
+<kw name="Log" library="BuiltIn">
+<arg>${row}[Order number]</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210525 16:55:23.249" level="INFO">5</msg>
+<status status="PASS" starttime="20210525 16:55:23.248" endtime="20210525 16:55:23.249"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>css=#head</arg>
+<arg>value</arg>
+<arg>${row}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:23.249" endtime="20210525 16:55:23.260"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${BodyRadioButton}</var>
+<arg>SEPARATOR=</arg>
+<arg>id-body-</arg>
+<arg>${row}[Body]</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20210525 16:55:23.260" level="INFO">${BodyRadioButton} = id-body-5</msg>
+<status status="PASS" starttime="20210525 16:55:23.260" endtime="20210525 16:55:23.260"/>
+</kw>
+<kw name="Check Checkbox" library="RPA.Browser.Playwright">
+<arg>//*[@id="${BodyRadioButton}"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Checks the checkbox or selects radio button found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:23.260" endtime="20210525 16:55:23.310"/>
+</kw>
+<kw name="Type Text" library="RPA.Browser.Playwright">
+<arg>//*[@id="address"]</arg>
+<arg>${row}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``text`` into the text field found by ``selector``.</doc>
+<msg timestamp="20210525 16:55:23.311" level="INFO">Types the text 'Address 2' in the given field.</msg>
+<status status="PASS" starttime="20210525 16:55:23.311" endtime="20210525 16:55:23.348"/>
+</kw>
+<kw name="Keyboard Key" library="RPA.Browser.Playwright">
+<arg>down</arg>
+<arg>Shift</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Press a keyboard key on the virtual keyboard or set a key up or down.</doc>
+<status status="PASS" starttime="20210525 16:55:23.348" endtime="20210525 16:55:23.354"/>
+</kw>
+<kw name="Keyboard Key" library="RPA.Browser.Playwright">
+<arg>down</arg>
+<arg>Tab</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Press a keyboard key on the virtual keyboard or set a key up or down.</doc>
+<status status="PASS" starttime="20210525 16:55:23.355" endtime="20210525 16:55:23.361"/>
+</kw>
+<kw name="Keyboard Key" library="RPA.Browser.Playwright">
+<arg>up</arg>
+<arg>Shift</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Press a keyboard key on the virtual keyboard or set a key up or down.</doc>
+<status status="PASS" starttime="20210525 16:55:23.361" endtime="20210525 16:55:23.365"/>
+</kw>
+<kw name="Keyboard Input" library="RPA.Browser.Playwright">
+<arg>type</arg>
+<arg>${row}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Input text into page with virtual keyboard.</doc>
+<status status="PASS" starttime="20210525 16:55:23.365" endtime="20210525 16:55:23.372"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:23.248" endtime="20210525 16:55:23.372"/>
+</kw>
+<kw name="Preview the robot">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>//*[@id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:23.372" endtime="20210525 16:55:23.421"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:23.372" endtime="20210525 16:55:23.421"/>
+</kw>
+<kw name="Submit the order">
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>10x</arg>
+<arg>3 s</arg>
+<arg>Click</arg>
+<arg>//*[@id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>//*[@id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:23.422" endtime="20210525 16:55:23.464"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:23.422" endtime="20210525 16:55:23.464"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:23.422" endtime="20210525 16:55:23.464"/>
+</kw>
+<kw name="Store the receipt as a PDF file">
+<var>${pdf}</var>
+<arg>${row}[Order number]</arg>
+<kw name="Maak directory als die nog niet bestaat">
+<var>${TargetDirectory}</var>
+<arg>receipts</arg>
+<kw name="Catenate" library="BuiltIn">
+<var>${TargetDirectory}</var>
+<arg>SEPARATOR=</arg>
+<arg>${OUTPUT_DIR}${/}</arg>
+<arg>${DirectoryNaam}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20210525 16:55:23.465" level="INFO">${TargetDirectory} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\receipts</msg>
+<status status="PASS" starttime="20210525 16:55:23.465" endtime="20210525 16:55:23.465"/>
+</kw>
+<kw name="Does Directory Exist" library="RPA.FileSystem">
+<var>${DirectoryExists}</var>
+<arg>${TargetDirectory}</arg>
+<doc>Returns True if the given directory exists, False if not.</doc>
+<msg timestamp="20210525 16:55:23.466" level="INFO">${DirectoryExists} = True</msg>
+<status status="PASS" starttime="20210525 16:55:23.465" endtime="20210525 16:55:23.466"/>
+</kw>
+<if>
+<branch type="IF" condition="${DirectoryExists} == ${False}">
+<kw name="Create Directory" library="RPA.FileSystem">
+<arg>${TargetDirectory}</arg>
+<doc>Creates a directory and (optionally) non-existing parent directories.</doc>
+<status status="NOT RUN" starttime="20210525 16:55:23.466" endtime="20210525 16:55:23.467"/>
+</kw>
+<status status="NOT RUN" starttime="20210525 16:55:23.466" endtime="20210525 16:55:23.467"/>
+</branch>
+<status status="PASS" starttime="20210525 16:55:23.466" endtime="20210525 16:55:23.467"/>
+</if>
+<msg timestamp="20210525 16:55:23.467" level="INFO">${TargetDirectory} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\receipts</msg>
+<status status="PASS" starttime="20210525 16:55:23.464" endtime="20210525 16:55:23.467"/>
+</kw>
+<kw name="Get Property" library="RPA.Browser.Playwright">
+<var>${order_results_html}</var>
+<arg>//*[@id="receipt"]</arg>
+<arg>outerHTML</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the ``property`` of the element found by ``selector``.</doc>
+<msg timestamp="20210525 16:55:23.485" level="INFO">${order_results_html} = &lt;div id="receipt" class="alert alert-success" role="alert"&gt;&lt;h3&gt;Receipt&lt;/h3&gt;&lt;div&gt;2021-05-25T14:55:23.459Z&lt;/div&gt;&lt;p class="badge badge-success"&gt;RSB-ROBO-ORDER-KTC9WXVK75G&lt;/p&gt;&lt;p&gt;Address 2&lt;/p&gt;&lt;div id="part...</msg>
+<status status="PASS" starttime="20210525 16:55:23.467" endtime="20210525 16:55:23.485"/>
+</kw>
+<kw name="Html To Pdf" library="RPA.PDF">
+<arg>${order_results_html}</arg>
+<arg>${TargetDirectory}${/}${Ordernumber}.pdf</arg>
+<doc>Generate a PDF file from HTML content.</doc>
+<msg timestamp="20210525 16:55:23.486" level="INFO">Writing output to file c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\receipts\5.pdf</msg>
+<status status="PASS" starttime="20210525 16:55:23.485" endtime="20210525 16:55:23.488"/>
+</kw>
+<msg timestamp="20210525 16:55:23.488" level="INFO">${pdf} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\receipts\5.pdf</msg>
+<status status="PASS" starttime="20210525 16:55:23.464" endtime="20210525 16:55:23.488"/>
+</kw>
+<kw name="Take a screenshot of the robot">
+<var>${screenshot}</var>
+<arg>${row}[Order number]</arg>
+<kw name="Maak directory als die nog niet bestaat">
+<var>${TargetDirectory}</var>
+<arg>screenshots</arg>
+<kw name="Catenate" library="BuiltIn">
+<var>${TargetDirectory}</var>
+<arg>SEPARATOR=</arg>
+<arg>${OUTPUT_DIR}${/}</arg>
+<arg>${DirectoryNaam}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20210525 16:55:23.490" level="INFO">${TargetDirectory} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\screenshots</msg>
+<status status="PASS" starttime="20210525 16:55:23.489" endtime="20210525 16:55:23.490"/>
+</kw>
+<kw name="Does Directory Exist" library="RPA.FileSystem">
+<var>${DirectoryExists}</var>
+<arg>${TargetDirectory}</arg>
+<doc>Returns True if the given directory exists, False if not.</doc>
+<msg timestamp="20210525 16:55:23.490" level="INFO">${DirectoryExists} = True</msg>
+<status status="PASS" starttime="20210525 16:55:23.490" endtime="20210525 16:55:23.490"/>
+</kw>
+<if>
+<branch type="IF" condition="${DirectoryExists} == ${False}">
+<kw name="Create Directory" library="RPA.FileSystem">
+<arg>${TargetDirectory}</arg>
+<doc>Creates a directory and (optionally) non-existing parent directories.</doc>
+<status status="NOT RUN" starttime="20210525 16:55:23.491" endtime="20210525 16:55:23.491"/>
+</kw>
+<status status="NOT RUN" starttime="20210525 16:55:23.491" endtime="20210525 16:55:23.491"/>
+</branch>
+<status status="PASS" starttime="20210525 16:55:23.491" endtime="20210525 16:55:23.491"/>
+</if>
+<msg timestamp="20210525 16:55:23.491" level="INFO">${TargetDirectory} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\screenshots</msg>
+<status status="PASS" starttime="20210525 16:55:23.489" endtime="20210525 16:55:23.491"/>
+</kw>
+<kw name="Take Screenshot" library="RPA.Browser.Playwright">
+<arg>${TargetDirectory}${/}${Ordernumber}.jpg</arg>
+<arg>//*[@id="robot-preview-image"]</arg>
+<tag>PageContent</tag>
+<doc>Takes a screenshot of the current window and saves it to ``path``. Saves it as a png.</doc>
+<msg timestamp="20210525 16:55:23.761" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="screenshots/5.jpg.png"&gt;&lt;img src="screenshots/5.jpg.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20210525 16:55:23.491" endtime="20210525 16:55:23.761"/>
+</kw>
+<msg timestamp="20210525 16:55:23.762" level="INFO">${screenshot} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\screenshots\5.jpg</msg>
+<status status="PASS" starttime="20210525 16:55:23.489" endtime="20210525 16:55:23.762"/>
+</kw>
+<kw name="Go to order another robot">
+<kw name="Go To" library="RPA.Browser.Playwright">
+<arg>https://robotsparebinindustries.com/#/robot-order</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Navigates to the given ``url``.</doc>
+<msg timestamp="20210525 16:55:23.896" level="INFO">Succesfully opened URL https://robotsparebinindustries.com/#/robot-order</msg>
+<status status="PASS" starttime="20210525 16:55:23.765" endtime="20210525 16:55:23.897"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:23.763" endtime="20210525 16:55:23.898"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:23.199" endtime="20210525 16:55:23.898"/>
+</iter>
+<iter>
+<var name="${row}">{'Order number': '6', 'Head': '1', 'Body': '6', 'Legs': '6', 'Address': 'Address 3'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>text="OK"</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:23.899" endtime="20210525 16:55:23.946"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:23.898" endtime="20210525 16:55:23.946"/>
+</kw>
+<kw name="Fill the form">
+<arg>${row}</arg>
+<kw name="Log" library="BuiltIn">
+<arg>${row}[Order number]</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210525 16:55:23.947" level="INFO">6</msg>
+<status status="PASS" starttime="20210525 16:55:23.946" endtime="20210525 16:55:23.947"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>css=#head</arg>
+<arg>value</arg>
+<arg>${row}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:23.947" endtime="20210525 16:55:23.960"/>
+</kw>
+<kw name="Catenate" library="BuiltIn">
+<var>${BodyRadioButton}</var>
+<arg>SEPARATOR=</arg>
+<arg>id-body-</arg>
+<arg>${row}[Body]</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20210525 16:55:23.960" level="INFO">${BodyRadioButton} = id-body-6</msg>
+<status status="PASS" starttime="20210525 16:55:23.960" endtime="20210525 16:55:23.960"/>
+</kw>
+<kw name="Check Checkbox" library="RPA.Browser.Playwright">
+<arg>//*[@id="${BodyRadioButton}"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Checks the checkbox or selects radio button found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:23.960" endtime="20210525 16:55:24.013"/>
+</kw>
+<kw name="Type Text" library="RPA.Browser.Playwright">
+<arg>//*[@id="address"]</arg>
+<arg>${row}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Types the given ``text`` into the text field found by ``selector``.</doc>
+<msg timestamp="20210525 16:55:24.014" level="INFO">Types the text 'Address 3' in the given field.</msg>
+<status status="PASS" starttime="20210525 16:55:24.014" endtime="20210525 16:55:24.046"/>
+</kw>
+<kw name="Keyboard Key" library="RPA.Browser.Playwright">
+<arg>down</arg>
+<arg>Shift</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Press a keyboard key on the virtual keyboard or set a key up or down.</doc>
+<status status="PASS" starttime="20210525 16:55:24.046" endtime="20210525 16:55:24.050"/>
+</kw>
+<kw name="Keyboard Key" library="RPA.Browser.Playwright">
+<arg>down</arg>
+<arg>Tab</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Press a keyboard key on the virtual keyboard or set a key up or down.</doc>
+<status status="PASS" starttime="20210525 16:55:24.050" endtime="20210525 16:55:24.058"/>
+</kw>
+<kw name="Keyboard Key" library="RPA.Browser.Playwright">
+<arg>up</arg>
+<arg>Shift</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Press a keyboard key on the virtual keyboard or set a key up or down.</doc>
+<status status="PASS" starttime="20210525 16:55:24.058" endtime="20210525 16:55:24.062"/>
+</kw>
+<kw name="Keyboard Input" library="RPA.Browser.Playwright">
+<arg>type</arg>
+<arg>${row}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Input text into page with virtual keyboard.</doc>
+<status status="PASS" starttime="20210525 16:55:24.062" endtime="20210525 16:55:24.067"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:23.946" endtime="20210525 16:55:24.068"/>
+</kw>
+<kw name="Preview the robot">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>//*[@id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:24.069" endtime="20210525 16:55:24.116"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:24.068" endtime="20210525 16:55:24.116"/>
+</kw>
+<kw name="Submit the order">
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>10x</arg>
+<arg>3 s</arg>
+<arg>Click</arg>
+<arg>//*[@id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>//*[@id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20210525 16:55:24.117" endtime="20210525 16:55:24.172"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:24.117" endtime="20210525 16:55:24.172"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:24.116" endtime="20210525 16:55:24.172"/>
+</kw>
+<kw name="Store the receipt as a PDF file">
+<var>${pdf}</var>
+<arg>${row}[Order number]</arg>
+<kw name="Maak directory als die nog niet bestaat">
+<var>${TargetDirectory}</var>
+<arg>receipts</arg>
+<kw name="Catenate" library="BuiltIn">
+<var>${TargetDirectory}</var>
+<arg>SEPARATOR=</arg>
+<arg>${OUTPUT_DIR}${/}</arg>
+<arg>${DirectoryNaam}</arg>
+<doc>Catenates the given items together and returns the resulted string.</doc>
+<msg timestamp="20210525 16:55:24.174" level="INFO">${TargetDirectory} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\receipts</msg>
+<status status="PASS" starttime="20210525 16:55:24.173" endtime="20210525 16:55:24.174"/>
+</kw>
+<kw name="Does Directory Exist" library="RPA.FileSystem">
+<var>${DirectoryExists}</var>
+<arg>${TargetDirectory}</arg>
+<doc>Returns True if the given directory exists, False if not.</doc>
+<msg timestamp="20210525 16:55:24.175" level="INFO">${DirectoryExists} = True</msg>
+<status status="PASS" starttime="20210525 16:55:24.174" endtime="20210525 16:55:24.175"/>
+</kw>
+<if>
+<branch type="IF" condition="${DirectoryExists} == ${False}">
+<kw name="Create Directory" library="RPA.FileSystem">
+<arg>${TargetDirectory}</arg>
+<doc>Creates a directory and (optionally) non-existing parent directories.</doc>
+<status status="NOT RUN" starttime="20210525 16:55:24.175" endtime="20210525 16:55:24.175"/>
+</kw>
+<status status="NOT RUN" starttime="20210525 16:55:24.175" endtime="20210525 16:55:24.175"/>
+</branch>
+<status status="PASS" starttime="20210525 16:55:24.175" endtime="20210525 16:55:24.175"/>
+</if>
+<msg timestamp="20210525 16:55:24.175" level="INFO">${TargetDirectory} = c:\Users\gmell\OneDrive\RobocorpRepo\Robocorp level II certification course\receipts</msg>
+<status status="PASS" starttime="20210525 16:55:24.173" endtime="20210525 16:55:24.175"/>
+</kw>
+<kw name="Get Property" library="RPA.Browser.Playwright">
+<var>${order_results_html}</var>
+<arg>//*[@id="receipt"]</arg>
+<arg>outerHTML</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the ``property`` of the element found by ``selector``.</doc>
+<msg timestamp="20210525 16:55:34.565" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="Order_robots_from_RobotSpareBin_Industries_Inc_FAILURE_SCREENSHOT_1.png"&gt;&lt;img src="Order_robots_from_RobotSpareBin_Industries_Inc_FAILURE_SCREENSHOT_1.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg timestamp="20210525 16:55:34.570" level="FAIL">TimeoutError: page.waitForSelector: Timeout 10000ms exceeded.
+=========================== logs ===========================
+waiting for selector "//*[@id="receipt"]"
+============================================================
+Note: use DEBUG=pw:api environment variable and rerun to capture Playwright logs.</msg>
+<status status="FAIL" starttime="20210525 16:55:24.175" endtime="20210525 16:55:34.570"/>
+</kw>
+<kw name="Html To Pdf" library="RPA.PDF">
+<arg>${order_results_html}</arg>
+<arg>${TargetDirectory}${/}${Ordernumber}.pdf</arg>
+<doc>Generate a PDF file from HTML content.</doc>
+<status status="NOT RUN" starttime="20210525 16:55:34.571" endtime="20210525 16:55:34.571"/>
+</kw>
+<status status="FAIL" starttime="20210525 16:55:24.172" endtime="20210525 16:55:34.571"/>
+</kw>
+<kw name="Take a screenshot of the robot">
+<var>${screenshot}</var>
+<arg>${row}[Order number]</arg>
+<status status="NOT RUN" starttime="20210525 16:55:34.571" endtime="20210525 16:55:34.571"/>
+</kw>
+<kw name="Go to order another robot">
+<status status="NOT RUN" starttime="20210525 16:55:34.571" endtime="20210525 16:55:34.571"/>
+</kw>
+<status status="FAIL" starttime="20210525 16:55:23.898" endtime="20210525 16:55:34.571"/>
+</iter>
+<status status="FAIL" starttime="20210525 16:55:20.423" endtime="20210525 16:55:34.571"/>
+</for>
+<kw name="Pause Execution" library="Dialogs">
+<arg>Succes!</arg>
+<doc>Pauses test execution until user clicks ``Ok`` button.</doc>
+<status status="NOT RUN" starttime="20210525 16:55:34.571" endtime="20210525 16:55:34.571"/>
+</kw>
+<status status="FAIL" starttime="20210525 16:55:18.182" endtime="20210525 16:55:34.572">TimeoutError: page.waitForSelector: Timeout 10000ms exceeded.
+=========================== logs ===========================
+waiting for selector "//*[@id="receipt"]"
+============================================================
+Note: use DEBUG=pw:api environment variable and rerun to capture Playwright logs.</status>
+</test>
+<test id="s1-t2" name="Minimal task">
+<kw name="Log" library="BuiltIn">
+<arg>Done.</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20210525 16:55:34.654" level="INFO">Done.</msg>
+<status status="PASS" starttime="20210525 16:55:34.653" endtime="20210525 16:55:34.654"/>
+</kw>
+<status status="PASS" starttime="20210525 16:55:34.645" endtime="20210525 16:55:34.654"/>
+</test>
+<doc>Orders robots from RobotSpareBin Industries Inc.
+Saves the order HTML receipt as a PDF file.
+Saves the screenshot of the ordered robot.
+Embeds the screenshot of the robot to the PDF receipt.
+Creates ZIP archive of the receipts and the images.</doc>
+<status status="FAIL" starttime="20210525 16:55:17.102" endtime="20210525 16:55:34.664"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="1" skip="0">All Tasks</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="1" skip="0" id="s1" name="Tasks">Tasks</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
